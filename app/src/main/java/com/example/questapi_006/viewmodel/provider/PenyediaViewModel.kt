@@ -18,12 +18,12 @@ object PenyediaViewModel {
     val Factory = viewModelFactory {
         initializer {
             HomeViewModel(
-                aplikasiDataSiswa().container.repositoryDataSiswa
+                aplikasiDataSiswa().container.repositoriDataSiswa
             )
         }
         initializer {
             EntryViewModel(
-                aplikasiDataSiswa().container.repositoryDataSiswa
+                aplikasiDataSiswa().container.repositoriDataSiswa
             )
         }
     }
