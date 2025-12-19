@@ -34,20 +34,18 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.questapi_006.viewmodel.provider.PenyediaViewModel
 import com.example.questapi_006.R
 import com.example.questapi_006.modeldata.DataSiswa
 import com.example.questapi_006.uicontroller.route.DestinasiHome
 import com.example.questapi_006.viewmodel.HomeViewModel
 import com.example.questapi_006.viewmodel.StatusUiSiswa
-import com.example.questapi_006.viewmodel.provider.PenyediaViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(
-    //edit 1.1 : tambahkan parameter navigateToItemEntry
     navigateToItemEntry: () -> Unit,
-    //edit 2.4 : tambahkan parameter navigateToItemUpdate
-    navigateToItemUpdate:(Int) -> Unit,
+    navigateToItemUpdate: (Int) -> Unit,
     modifier: Modifier = Modifier,
     viewModel: HomeViewModel = viewModel(factory = PenyediaViewModel.Factory)
 ) {
@@ -63,17 +61,16 @@ fun HomeScreen(
         },
         floatingActionButton = {
             FloatingActionButton(
-                //edit 1.2 : event onClick
                 onClick = navigateToItemEntry,
                 shape = MaterialTheme.shapes.medium,
-                modifier = Modifier.padding(dimensionResource(id = R.dimen.padding_large))
+                modifier = Modifier.padding(dimensionResource(R.dimen.padding_large))
             ) {
                 Icon(
                     imageVector = Icons.Default.Add,
                     contentDescription = stringResource(R.string.entry_siswa)
                 )
             }
-        },
+        }
     ) { innerPadding ->
         HomeBody(
             statusUiSiswa = viewModel.listSiswa,
@@ -85,30 +82,32 @@ fun HomeScreen(
         )
     }
 }
+
 @Composable
 fun HomeBody(
     statusUiSiswa: StatusUiSiswa,
-    //edit 2.3 tambahkan parameter onSiswaClick
     onSiswaClick: (Int) -> Unit,
     retryAction: () -> Unit,
     modifier: Modifier = Modifier
-){
+) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = modifier
-    ){
-        when(statusUiSiswa){
+    ) {
+        when (statusUiSiswa) {
             is StatusUiSiswa.Loading -> LoadingScreen()
-            //edit 2.5 : tambahkan event onSiswaClick
-            is StatusUiSiswa.Success -> DaftarSiswa(itemSiswa = statusUiSiswa.Siswa,
-                onSiswaClick = {onSiswaClick(it.id)} )
+            is StatusUiSiswa.Success -> DaftarSiswa(
+                itemSiswa = statusUiSiswa.Siswa,
+                onSiswaClick = { onSiswaClick(it.id) })
+
             is StatusUiSiswa.Error -> ErrorScreen(
                 retryAction,
-                modifier = modifier.fillMaxSize()
+                modifier = Modifier.fillMaxSize()
             )
         }
     }
 }
+
 @Composable
 fun LoadingScreen(modifier: Modifier = Modifier) {
     Image(
@@ -119,33 +118,35 @@ fun LoadingScreen(modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun ErrorScreen(retryAction: () -> Unit, modifier: Modifier = Modifier) {
+fun ErrorScreen(
+    retryAction: () -> Unit,
+    modifier: Modifier = Modifier
+) {
     Column(
         modifier = modifier,
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text(text = stringResource(R.string.gagal), modifier = Modifier.padding(16.dp))
+        Text(text = stringResource(R.string.gagal),
+            modifier = Modifier.padding(16.dp))
         Button(onClick = retryAction) {
-            Text(stringResource(R.string.retry))
+            Text(text = stringResource(R.string.retry))
         }
     }
 }
+
 @Composable
 fun DaftarSiswa(
-    itemSiswa : List<DataSiswa>,
-    //edit 2.1 : tambahkab parameter onSiswaClick
+    itemSiswa: List<DataSiswa>,
     onSiswaClick: (DataSiswa) -> Unit,
-    modifier: Modifier=Modifier
-){
-    LazyColumn(modifier = Modifier){
-        items(items = itemSiswa, key = {it.id}){
-                person ->
+    modifier: Modifier = Modifier
+) {
+    LazyColumn(modifier = Modifier) {
+        items(items = itemSiswa, key = { it.id }) { person ->
             ItemSiswa(
                 siswa = person,
                 modifier = Modifier
                     .padding(dimensionResource(id = R.dimen.padding_small))
-                    //edit 2.2 jadikan itemsiswa menjadi clickable()
                     .clickable { onSiswaClick(person) }
             )
         }
@@ -163,8 +164,7 @@ fun ItemSiswa(
     ) {
         Column(
             modifier = Modifier.padding(dimensionResource(id = R.dimen.padding_large)),
-            verticalArrangement = Arrangement.spacedBy(dimensionResource(
-                id = R.dimen.padding_small))
+            verticalArrangement = Arrangement.spacedBy(dimensionResource(id = R.dimen.padding_small))
         ) {
             Row(
                 modifier = Modifier.fillMaxWidth()
