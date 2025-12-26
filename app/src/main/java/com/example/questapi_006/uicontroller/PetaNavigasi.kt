@@ -51,3 +51,8 @@ fun HostNavigasi(
         composable(DestinasiDetail.routeWithArgs, arguments = listOf(navArgument(DestinasiDetail.itemIdArg) {
             type = NavType.IntType  })
         ){
+            DetailSiswaScreen(navigateToEditItem = {navController.navigate("${DestinasiEdit.route}/$it")},
+                navigateBack = { navController.navigate(DestinasiHome.route) })
+        }
+
+
