@@ -9,7 +9,6 @@ interface RepositoryDataSiswa{
     suspend fun postDataSiswa(dataSiswa: DataSiswa) :retrofit2.Response<Void>
     suspend fun getSatuSiswa(id: Int): DataSiswa
 
-}
 
 class JaringanRepositoryDataSiswa(
     private val serviceApiSiswa: ServiceApiSiswa
