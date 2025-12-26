@@ -9,8 +9,8 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.questapi_006.model.DataSiswa
-import com.example.questapi_006.repository.RepositoryDataSiswa
+import com.example.questapi_006.modeldata.DataSiswa
+import com.example.questapi_006.repositori.RepositoryDataSiswa
 import com.example.questapi_006.uicontroller.route.DestinasiDetail
 import kotlinx.coroutines.launch
 import kotlinx.serialization.InternalSerializationApi
@@ -36,15 +36,15 @@ class DetailViewModel(
         private set
 
     init {
-        getStatusSiswa()
+        getSatuSiswa()
     }
 
-    fun getStatusSiswa() {
+    fun getSatuSiswa() {
         viewModelScope.launch {
             statusUiDetail = StatusUiDetail.Loading
             statusUiDetail = try {
                 StatusUiDetail.Success(
-                    satusiswa = repositoryDataSiswa.getSatusiswa(idSiswa)
+                    satusiswa = repositoryDataSiswa.getSatuSiswa(idSiswa)
                 )
             } catch (e: IOException) {
                 StatusUiDetail.Error
