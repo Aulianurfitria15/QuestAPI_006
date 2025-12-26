@@ -20,3 +20,8 @@ interface ServiceApiSiswa {
 
     @PUT("editSatuSiswa.php/{id}")
     suspend fun getSatuSiswa(@Query("id") id: Int, @Body dataSiswa: DataSiswa):retrofit2.Response<Void>
+
+    @DELETE("deleteTM.php/{id}")
+    suspend fun hapusSatuSiswa(@Query("id") id: Int):retrofit2.Response<Void>
+
+}
