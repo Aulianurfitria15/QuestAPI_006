@@ -33,6 +33,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.questapi_006.R
 import com.example.questapi_006.modeldata.DataSiswa
+import com.example.questapi_006.uicontroller.route.DestinasiDetail
 import com.example.questapi_006.viewmodel.DetailViewModel
 import com.example.questapi_006.viewmodel.StatusUiDetail
 import com.example.questapi_006.viewmodel.provider.PenyediaViewModel
